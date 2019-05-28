@@ -1,0 +1,28 @@
+function addDocument() {
+    debugger
+    var data = new FormData();
+    var files = $("#fileUpload").get(0).files;
+
+    // Add the uploaded image content to the form data collection
+    if (files.length > 0) {
+
+        for (var x = 0; x <= files.length ; x++) {
+            data.append("documents", files[x]);
+
+        }
+    }
+    //var getUrl = window.location;
+    //var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[0];
+    var ajaxRequest = $.ajax({
+        type: "POST",
+        url: "api/ClientPortal/FileAttachment",
+        contentType: false,
+        processData: false,
+        data: data
+    });
+
+    ajaxRequest.done(function (xhr, textStatus) {
+
+
+    });
+}

@@ -1,0 +1,26 @@
+   public System.Web.Http.Results.JsonResult<string> NewPolReqFileAttachment()
+        {
+
+            var httpContextNewPolReq = HttpContext.Current;
+            if (httpContextNewPolReq.Request.Files.Count > 0)
+            {
+                for (int i = 0; i < httpContextNewPolReq.Request.Files.Count; i++)
+                {
+                    HttpPostedFile httpPostedFile = httpContextNewPolReq.Request.Files[i];
+                    if (httpPostedFile != null)
+                    {
+
+                        var fileSavePath = Path.Combine(HttpContext.Current.Server.MapPath("~/documents"), httpPostedFile.FileName);
+                        dal objdal = new dal();
+                        string prid = HttpContext.Current.Session["pr_id"].ToString();
+                        string filename = httpPostedFile.FileName;
+                        objdal.InsertNewPolReqdocument(prid, filename);
+                        httpPostedFile.SaveAs(fileSavePath);
+
+                    }
+                }
+            }
+
+
+            return Json<string>("data saved");
+        }
